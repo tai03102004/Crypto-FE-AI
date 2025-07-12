@@ -1,14 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
-import {  useRouter } from 'next/navigation';
-import { generateMetadata } from '@/app/helper/generateMetadata';
-
-// export const metadata = generateMetadata(
-//   "JadenX.AI - Crypto Prices",
-//   "Real-time cryptocurrency prices and market data"
-// );
+import { useRouter } from 'next/navigation';
 
 // Type definitions
 interface CryptoData {
@@ -52,26 +45,26 @@ const CryptoPricesPage: React.FC = () => {
       name: 'Bitcoin',
       symbol: 'BTC',
       icon: '₿',
-      color: 'text-orange-500'
+      color: 'text-orange-400'
     },
     ethereum: {
       name: 'Ethereum',
       symbol: 'ETH',
       icon: 'Ξ',
-      color: 'text-blue-500'
+      color: 'text-blue-400'
     },
     binancecoin: {
       name: 'Binance Coin',
       symbol: 'BNB',
       icon: 'BNB',
-      color: 'text-yellow-500'
+      color: 'text-yellow-400'
     }
   };
 
   // Fetch crypto data from API
   const fetchCryptoData = async (): Promise<void> => {
     try {
-      setLoading(true);
+      // setLoading(true);
       const response = await fetch('http://localhost:3000/api/crypto/prices');
       console.log(response);
       
@@ -130,8 +123,8 @@ const CryptoPricesPage: React.FC = () => {
     const isPositive = percentage >= 0;
     return {
       value: `${isPositive ? '+' : ''}${percentage.toFixed(2)}%`,
-      color: isPositive ? 'text-green-500' : 'text-red-500',
-      bgColor: isPositive ? 'bg-green-50' : 'bg-red-50'
+      color: isPositive ? 'text-green-400' : 'text-red-400',
+      bgColor: isPositive ? 'bg-green-500/20' : 'bg-red-500/20'
     };
   };
 
@@ -147,10 +140,10 @@ const CryptoPricesPage: React.FC = () => {
 
   if (loading && !cryptoData) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-[#171c24] flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading crypto data...</p>
+          <div className="animate-spin rounded-full h-16 w-16 border-4 border-gray-600 border-t-blue-500 mx-auto mb-6"></div>
+          <p className="text-gray-300 text-lg">Loading crypto data...</p>
         </div>
       </div>
     );
@@ -158,53 +151,58 @@ const CryptoPricesPage: React.FC = () => {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center p-8 bg-white rounded-lg shadow-lg max-w-md">
-          <div className="text-red-500 text-5xl mb-4">⚠️</div>
-          <h2 className="text-xl font-bold text-gray-800 mb-2">Connection Error</h2>
-          <p className="text-gray-600 mb-4">
+      <div className="min-h-screen bg-[#171c24] flex items-center justify-center">
+        <div className="text-center p-8 bg-gray-800/50 backdrop-blur-sm rounded-2xl shadow-2xl max-w-md border border-gray-700">
+          <div className="text-red-400 text-6xl mb-6">⚠️</div>
+          <h2 className="text-2xl font-bold text-white mb-4">Connection Error</h2>
+          <p className="text-gray-300 mb-6 leading-relaxed">
             Cannot connect to the crypto API server. Please make sure the backend is running on localhost:3000.
           </p>
           <button
             onClick={fetchCryptoData}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition-colors"
+            className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-all duration-200 hover:scale-105"
           >
-            Retry
-          </button>
+            Try Again
+          </button> 
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+    <div className="min-h-screen bg-[#171c24]">
       {/* Header */}
-      <div className="bg-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+      <div className="bg-gray-800/30 backdrop-blur-sm border-b border-gray-700/50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900">Crypto Co-Pilot</h1>
-              <p className="text-gray-600 mt-1">Real-time cryptocurrency prices</p>
+              <h1 className="text-4xl font-bold text-white mb-2">
+                <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+                  Crypto Prices
+                </span>
+              </h1>
+              <p className="text-gray-400 text-lg">Real-time cryptocurrency market data</p>
             </div>
             <div className="text-right">
               <button
                 onClick={fetchCryptoData}
                 disabled={loading}
-                className="bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white px-4 py-2 rounded-lg font-medium transition-colors flex items-center gap-2"
+                className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 disabled:opacity-50 disabled:cursor-not-allowed text-white px-6 py-3 rounded-xl font-medium transition-all duration-200 flex items-center gap-3 hover:scale-105"
               >
                 {loading ? (
                   <>
-                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                    <div className="animate-spin rounded-full h-5 w-5 border-2 border-white border-t-transparent"></div>
                     Updating...
                   </>
                 ) : (
                   <>
-                    🔄 Refresh
+                    <span className="text-lg">🔄</span>
+                    Refresh Data
                   </>
                 )}
               </button>
               {lastUpdated && (
-                <p className="text-sm text-gray-500 mt-1">
+                <p className="text-sm text-gray-400 mt-2">
                   Last updated: {lastUpdated.toLocaleTimeString()}
                 </p>
               )}
@@ -216,9 +214,9 @@ const CryptoPricesPage: React.FC = () => {
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {cryptoData ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {Object.entries(cryptoData).map(([coinId, data]: [string, CryptoData]) => {
-              const info: CoinInfo = coinInfo[coinId] || { name: coinId, symbol: coinId.toUpperCase(), icon: '?', color: 'text-gray-500' };
+              const info: CoinInfo = coinInfo[coinId] || { name: coinId, symbol: coinId.toUpperCase(), icon: '?', color: 'text-gray-400' };
               const percentChange: PercentageFormat = formatPercentage(data.usd_24h_change);
               const isClickable = hasHistoryData(coinId);
               
@@ -226,29 +224,29 @@ const CryptoPricesPage: React.FC = () => {
                 <div
                   key={coinId}
                   onClick={() => isClickable && handleCoinClick(coinId)}
-                  className={`bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 p-6 border border-gray-100 ${
+                  className={`bg-gray-800/50 backdrop-blur-sm rounded-2xl shadow-2xl border border-gray-700/50 p-6 transition-all duration-300 ${
                     isClickable 
-                      ? 'cursor-pointer hover:scale-105 hover:border-blue-200' 
-                      : 'cursor-default'
+                      ? 'cursor-pointer hover:scale-105 hover:bg-gray-800/70 hover:border-blue-500/50 hover:shadow-blue-500/20' 
+                      : 'cursor-default hover:bg-gray-800/60'
                   }`}
                 >
                   {/* Header */}
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="flex items-center gap-3">
-                      <div className={`text-2xl ${info.color} font-bold`}>
+                  <div className="flex items-center justify-between mb-6">
+                    <div className="flex items-center gap-4">
+                      <div className={`text-3xl ${info.color} font-bold bg-gray-700/50 p-3 rounded-xl`}>
                         {info.icon}
                       </div>
                       <div>
-                        <h3 className="text-lg font-bold text-gray-900">{info.name}</h3>
-                        <p className="text-sm text-gray-500">{info.symbol}</p>
+                        <h3 className="text-xl font-bold text-white">{info.name}</h3>
+                        <p className="text-gray-400 text-sm font-medium">{info.symbol}</p>
                       </div>
                     </div>
-                    <div className="flex items-center gap-2">
-                      <div className={`px-3 py-1 rounded-full text-sm font-medium ${percentChange.bgColor} ${percentChange.color}`}>
+                    <div className="flex items-center gap-3">
+                      <div className={`px-4 py-2 rounded-xl text-sm font-semibold ${percentChange.bgColor} ${percentChange.color} border border-current/20`}>
                         {percentChange.value}
                       </div>
                       {isClickable && (
-                        <div className="text-blue-500 text-sm">
+                        <div className="text-blue-400 text-lg bg-blue-500/20 p-2 rounded-lg">
                           📊
                         </div>
                       )}
@@ -256,42 +254,42 @@ const CryptoPricesPage: React.FC = () => {
                   </div>
 
                   {/* Price */}
-                  <div className="mb-4">
-                    <div className="text-2xl font-bold text-gray-900 mb-1">
+                  <div className="mb-6">
+                    <div className="text-3xl font-bold text-white mb-2">
                       ${formatNumber(data.usd)}
                     </div>
-                    <div className="text-sm text-gray-500">
-                      24h Change: <span className={percentChange.color}>{percentChange.value}</span>
+                    <div className="text-sm text-gray-400">
+                      24h Change: <span className={`font-semibold ${percentChange.color}`}>{percentChange.value}</span>
                     </div>
                   </div>
 
                   {/* Stats */}
-                  <div className="space-y-3">
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm text-gray-600">Market Cap</span>
-                      <span className="text-sm font-medium text-gray-900">
-                        {formatLargeNumber(data.usd_market_cap)}
+                  <div className="space-y-4">
+                    <div className="flex justify-between items-center p-3 bg-gray-700/30 rounded-lg">
+                      <span className="text-sm text-gray-400 font-medium">Market Cap</span>
+                      <span className="text-sm font-semibold text-white">
+                        ${formatLargeNumber(data.usd_market_cap)}
                       </span>
                     </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm text-gray-600">24h Volume</span>
-                      <span className="text-sm font-medium text-gray-900">
-                        {formatLargeNumber(data.usd_24h_vol)}
+                    <div className="flex justify-between items-center p-3 bg-gray-700/30 rounded-lg">
+                      <span className="text-sm text-gray-400 font-medium">24h Volume</span>
+                      <span className="text-sm font-semibold text-white">
+                        ${formatLargeNumber(data.usd_24h_vol)}
                       </span>
                     </div>
                   </div>
 
                   {/* Progress bar for 24h change */}
-                  <div className="mt-4">
-                    <div className="flex justify-between items-center mb-1">
-                      <span className="text-xs text-gray-500">24h Performance</span>
-                      <span className={`text-xs font-medium ${percentChange.color}`}>
+                  <div className="mt-6">
+                    <div className="flex justify-between items-center mb-2">
+                      <span className="text-xs text-gray-400 font-medium">24h Performance</span>
+                      <span className={`text-xs font-semibold ${percentChange.color}`}>
                         {Math.abs(data.usd_24h_change).toFixed(2)}%
                       </span>
                     </div>
-                    <div className="w-full bg-gray-200 rounded-full h-2">
+                    <div className="w-full bg-gray-700/50 rounded-full h-2 overflow-hidden">
                       <div
-                        className={`h-2 rounded-full transition-all duration-300 ${
+                        className={`h-2 rounded-full transition-all duration-500 ${
                           data.usd_24h_change >= 0 ? 'bg-green-500' : 'bg-red-500'
                         }`}
                         style={{
@@ -303,10 +301,10 @@ const CryptoPricesPage: React.FC = () => {
 
                   {/* Click hint for supported coins */}
                   {isClickable && (
-                    <div className="mt-4 pt-3 border-t border-gray-100">
-                      <div className="text-xs text-blue-600 font-medium flex items-center gap-1">
-                        <span>📈</span>
-                        Click to view price history
+                    <div className="mt-6 pt-4 border-t border-gray-700/50">
+                      <div className="text-xs text-blue-400 font-medium flex items-center gap-2 bg-blue-500/10 p-2 rounded-lg">
+                        <span className="text-sm">📈</span>
+                        Click to view detailed price history
                       </div>
                     </div>
                   )}
@@ -315,31 +313,34 @@ const CryptoPricesPage: React.FC = () => {
             })}
           </div>
         ) : (
-          <div className="text-center py-12">
-            <div className="text-gray-400 text-6xl mb-4">📊</div>
-            <h3 className="text-lg font-medium text-gray-900 mb-2">No Data Available</h3>
-            <p className="text-gray-500">Unable to fetch cryptocurrency data at this time.</p>
+          <div className="text-center py-16">
+            <div className="text-gray-500 text-8xl mb-6">📊</div>
+            <h3 className="text-2xl font-bold text-white mb-4">No Data Available</h3>
+            <p className="text-gray-400 text-lg">Unable to fetch cryptocurrency data at this time.</p>
           </div>
         )}
       </div>
 
       {/* Info Section */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="bg-white rounded-xl shadow-lg p-6">
-          <h2 className="text-xl font-bold text-gray-900 mb-4">📊 Chart Analysis Available</h2>
+        <div className="bg-gray-800/30 backdrop-blur-sm rounded-2xl shadow-2xl p-8 border border-gray-700/50">
+          <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+            <span className="text-3xl">📊</span>
+            Chart Analysis Available
+          </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="flex items-center gap-3 p-4 bg-orange-50 rounded-lg">
-              <div className="text-2xl text-orange-500">₿</div>
+            <div className="flex items-center gap-4 p-6 bg-orange-500/10 rounded-xl border border-orange-500/20">
+              <div className="text-4xl text-orange-400 bg-orange-500/20 p-3 rounded-xl">₿</div>
               <div>
-                <h3 className="font-semibold text-gray-900">Bitcoin (BTC)</h3>
-                <p className="text-sm text-gray-600">Click to view candlestick chart and price history</p>
+                <h3 className="font-semibold text-white text-lg">Bitcoin (BTC)</h3>
+                <p className="text-sm text-gray-400">Click to view candlestick chart and price history</p>
               </div>
             </div>
-            <div className="flex items-center gap-3 p-4 bg-blue-50 rounded-lg">
-              <div className="text-2xl text-blue-500">Ξ</div>
+            <div className="flex items-center gap-4 p-6 bg-blue-500/10 rounded-xl border border-blue-500/20">
+              <div className="text-4xl text-blue-400 bg-blue-500/20 p-3 rounded-xl">Ξ</div>
               <div>
-                <h3 className="font-semibold text-gray-900">Ethereum (ETH)</h3>
-                <p className="text-sm text-gray-600">Click to view candlestick chart and price history</p>
+                <h3 className="font-semibold text-white text-lg">Ethereum (ETH)</h3>
+                <p className="text-sm text-gray-400">Click to view candlestick chart and price history</p>
               </div>
             </div>
           </div>

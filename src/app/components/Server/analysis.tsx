@@ -1,8 +1,6 @@
-
 "use client"
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, JSX } from 'react';
 import { TrendingUp, TrendingDown, DollarSign, BarChart3, AlertTriangle, Activity } from 'lucide-react';
-import ReactMarkdown from 'react-markdown';
 import AIChatWidget from '../Widget/AIChatWidget';
 
 interface AnalysisData {
@@ -28,7 +26,7 @@ interface AnalysisData {
   }[];
   aiAnalysis: {
     analysis: string;
-    tradingSignals: any[];
+    tradingSignals: [];
   };
   alerts: {
     message: string;
@@ -37,6 +35,87 @@ interface AnalysisData {
   }[];
 }
 
+
+// Component để render AI analysis mà không cần ReactMarkdown
+interface AIAnalysisRendererProps {
+  analysis: string;
+}
+
+const AIAnalysisRenderer: React.FC<AIAnalysisRendererProps> = ({ analysis }) => {
+  if (!analysis) return <p className="text-gray-400">No Analysis...</p>;
+
+  // Parse markdown-like content thành HTML
+  const parseAnalysis = (text: string): JSX.Element[] => {
+    const lines = text.split('\n');
+    const elements: JSX.Element[] = [];
+    let listItems: JSX.Element[] = [];
+
+    lines.forEach((line, index) => {
+      const trimmed = line.trim();
+      
+      if (trimmed.startsWith('## ')) {
+        // Header 2
+        if (listItems.length > 0) {
+          elements.push(<ul key={`ul-${index}`} className="list-disc ml-6 mb-4 space-y-1">{listItems}</ul>);
+          listItems = [];
+        }
+        elements.push(
+          <h2 key={index} className="text-lg font-semibold text-blue-300 mb-2 mt-4 flex items-center gap-2 border-b border-gray-600 pb-1">
+            {trimmed.replace('## ', '')}
+          </h2>
+        );
+      } else if (trimmed.startsWith('### ')) {
+        // Header 3
+        if (listItems.length > 0) {
+          elements.push(<ul key={`ul-${index}`} className="list-disc ml-6 mb-4 space-y-1">{listItems}</ul>);
+          listItems = [];
+        }
+        elements.push(
+          <h3 key={index} className="text-md font-medium text-green-300 mb-2 mt-3">
+            {trimmed.replace('### ', '')}
+          </h3>
+        );
+      } else if (trimmed.startsWith('• ')) {
+        // Bullet point
+        const content = trimmed.replace('• ', '');
+        const formattedContent = content.replace(/\*\*(.+?)\*\*/g, '<strong class="text-yellow-300">$1</strong>');
+        listItems.push(
+          <li key={index} className="text-gray-300" dangerouslySetInnerHTML={{ __html: formattedContent }} />
+        );
+      } else if (trimmed.startsWith('**') && trimmed.endsWith('**')) {
+        // Bold text
+        if (listItems.length > 0) {
+          elements.push(<ul key={`ul-${index}`} className="list-disc ml-6 mb-4 space-y-1">{listItems}</ul>);
+          listItems = [];
+        }
+        elements.push(
+          <p key={index} className="text-gray-300 mb-2">
+            <strong className="text-yellow-300">{trimmed.replace(/\*\*/g, '')}</strong>
+          </p>
+        );
+      } else if (trimmed.length > 0) {
+        // Normal paragraph
+        if (listItems.length > 0) {
+          elements.push(<ul key={`ul-${index}`} className="list-disc ml-6 mb-4 space-y-1">{listItems}</ul>);
+          listItems = [];
+        }
+        const formattedContent = trimmed.replace(/\*\*(.+?)\*\*/g, '<strong class="text-yellow-300">$1</strong>');
+        elements.push(
+          <p key={index} className="text-gray-300 mb-2 leading-relaxed" dangerouslySetInnerHTML={{ __html: formattedContent }} />
+        );
+      }
+    });
+
+    // Add remaining list items
+    if (listItems.length > 0) {
+      elements.push(<ul key="final-ul" className="list-disc ml-6 mb-4 space-y-1">{listItems}</ul>);
+    }
+
+    return elements;
+  };
+
+  return <div className="space-y-2">{parseAnalysis(analysis)}</div>;
+};
 const CryptoAnalysisClient = () => {
   const [analysisData, setAnalysisData] = useState<AnalysisData | null>(null);
   const [loading, setLoading] = useState(true);
@@ -85,9 +164,9 @@ const CryptoAnalysisClient = () => {
   };
 
   const getRSIColor = (rsi: number) => {
-    if (rsi >= 70) return 'text-red-500';
-    if (rsi <= 30) return 'text-green-500';
-    return 'text-yellow-500';
+    if (rsi >= 70) return 'text-red-400';
+    if (rsi <= 30) return 'text-green-400';
+    return 'text-yellow-400';
   };
 
   const getRSILabel = (rsi: number) => {
@@ -98,10 +177,10 @@ const CryptoAnalysisClient = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-[#171c24] flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">Đang tải dữ liệu phân tích...</p>
+          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-500 mx-auto mb-4"></div>
+          <p className="text-gray-400">Loading data analysis...</p>
         </div>
       </div>
     );
@@ -109,28 +188,28 @@ const CryptoAnalysisClient = () => {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-[#171c24] flex items-center justify-center">
         <div className="text-center">
-          <AlertTriangle className="h-16 w-16 text-red-500 mx-auto mb-4" />
-          <h2 className="text-xl font-bold text-red-600 mb-2">Lỗi tải dữ liệu</h2>
-          <p className="text-gray-600">{error}</p>
+          <AlertTriangle className="h-16 w-16 text-red-400 mx-auto mb-4" />
+          <h2 className="text-xl font-bold text-red-400 mb-2">Lỗi tải dữ liệu</h2>
+          <p className="text-gray-400">{error}</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-[#171c24]">
       {/* Header */}
-      <div className="bg-white shadow-sm border-b">
+      <div className="bg-[#171c24] shadow-sm border-b border-gray-700/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-6">
             <div className="flex items-center space-x-3">
-              <Activity className="h-8 w-8 text-blue-600" />
-              <h1 className="text-2xl font-bold text-gray-900">Crypto Co-Pilot Analysis</h1>
+              <Activity className="h-8 w-8 text-blue-400" />
+              <h1 className="text-2xl font-bold text-white">JadenX.AI Analysis</h1>
             </div>
-            <div className="text-sm text-gray-500">
-              Cập nhật: {analysisData ? new Date(analysisData.timestamp).toLocaleString('vi-VN') : 'N/A'}
+            <div className="text-sm text-gray-400">
+              Update: {analysisData ? new Date(analysisData.timestamp).toLocaleString('vi-VN') : 'N/A'}
             </div>
           </div>
         </div>
@@ -140,7 +219,7 @@ const CryptoAnalysisClient = () => {
         {/* Market Overview */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
           {analysisData?.data?.map((coin) => (
-            <div key={coin.coin} className="bg-white rounded-lg shadow-sm border p-6">
+            <div key={coin.coin} className="bg-[#171c24] rounded-lg shadow-sm border border-gray-700/50 p-6">
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center space-x-3">
                   <div className="w-10 h-10 bg-gradient-to-br from-orange-400 to-orange-600 rounded-full flex items-center justify-center">
@@ -149,24 +228,24 @@ const CryptoAnalysisClient = () => {
                     </span>
                   </div>
                   <div>
-                    <h3 className="font-semibold text-gray-900 capitalize">{coin.coin}</h3>
-                    <p className="text-sm text-gray-500">
+                    <h3 className="font-semibold text-white capitalize">{coin.coin}</h3>
+                    <p className="text-sm text-gray-400">
                       {coin.coin === 'bitcoin' ? 'Bitcoin' : 'Ethereum'}
                     </p>
                   </div>
                 </div>
                 <div className="text-right">
-                  <p className="text-2xl font-bold text-gray-900">
+                  <p className="text-2xl font-bold text-white">
                     {formatPrice(coin.price.usd)}
                   </p>
                   <div className="flex items-center space-x-1">
                     {coin.price.usd_24h_change >= 0 ? (
-                      <TrendingUp className="h-4 w-4 text-green-500" />
+                      <TrendingUp className="h-4 w-4 text-green-400" />
                     ) : (
-                      <TrendingDown className="h-4 w-4 text-red-500" />
+                      <TrendingDown className="h-4 w-4 text-red-400" />
                     )}
                     <span className={`text-sm font-medium ${
-                      coin.price.usd_24h_change >= 0 ? 'text-green-600' : 'text-red-600'
+                      coin.price.usd_24h_change >= 0 ? 'text-green-400' : 'text-red-400'
                     }`}>
                       {coin.price.usd_24h_change.toFixed(2)}%
                     </span>
@@ -175,51 +254,51 @@ const CryptoAnalysisClient = () => {
               </div>
 
               <div className="grid grid-cols-2 gap-4 mb-4">
-                <div className="bg-gray-50 rounded-lg p-3">
+                <div className="bg-gray-800/50 rounded-lg p-3">
                   <div className="flex items-center space-x-2 mb-1">
-                    <DollarSign className="h-4 w-4 text-gray-600" />
-                    <span className="text-sm text-gray-600">Market Cap</span>
+                    <DollarSign className="h-4 w-4 text-gray-400" />
+                    <span className="text-sm text-gray-400">Market Cap</span>
                   </div>
-                  <p className="font-semibold text-gray-900">
+                  <p className="font-semibold text-white">
                     ${formatNumber(coin.price.usd_market_cap)}
                   </p>
                 </div>
-                <div className="bg-gray-50 rounded-lg p-3">
+                <div className="bg-gray-800/50 rounded-lg p-3">
                   <div className="flex items-center space-x-2 mb-1">
-                    <BarChart3 className="h-4 w-4 text-gray-600" />
-                    <span className="text-sm text-gray-600">24h Volume</span>
+                    <BarChart3 className="h-4 w-4 text-gray-400" />
+                    <span className="text-sm text-gray-400">24h Volume</span>
                   </div>
-                  <p className="font-semibold text-gray-900">
+                  <p className="font-semibold text-white">
                     ${formatNumber(coin.price.usd_24h_vol)}
                   </p>
                 </div>
               </div>
 
               {/* Technical Indicators */}
-              <div className="border-t pt-4">
-                <h4 className="font-medium text-gray-900 mb-3">Chỉ báo kỹ thuật</h4>
+              <div className="border-t border-gray-700/50 pt-4">
+                <h4 className="font-medium text-white mb-3">Chỉ báo kỹ thuật</h4>
                 <div className="grid grid-cols-2 gap-4">
-                  <div className="bg-blue-50 rounded-lg p-3">
+                  <div className="bg-blue-500/10 rounded-lg p-3">
                     <div className="flex justify-between items-center">
-                      <span className="text-sm text-gray-600">RSI</span>
+                      <span className="text-sm text-gray-400">RSI</span>
                       <span className={`text-sm font-medium ${getRSIColor(coin.indicators.rsi.value)}`}>
                         {getRSILabel(coin.indicators.rsi.value)}
                       </span>
                     </div>
-                    <p className="text-lg font-bold text-gray-900">
+                    <p className="text-lg font-bold text-white">
                       {coin.indicators.rsi.value.toFixed(2)}
                     </p>
                   </div>
-                  <div className="bg-purple-50 rounded-lg p-3">
+                  <div className="bg-purple-500/10 rounded-lg p-3">
                     <div className="flex justify-between items-center">
-                      <span className="text-sm text-gray-600">MACD</span>
+                      <span className="text-sm text-gray-400">MACD</span>
                       <span className={`text-sm font-medium ${
-                        coin.indicators.macd.valueMACD > coin.indicators.macd.valueMACDSignal ? 'text-green-600' : 'text-red-600'
+                        coin.indicators.macd.valueMACD > coin.indicators.macd.valueMACDSignal ? 'text-green-400' : 'text-red-400'
                       }`}>
                         {coin.indicators.macd.valueMACD > coin.indicators.macd.valueMACDSignal ? 'Bullish' : 'Bearish'}
                       </span>
                     </div>
-                    <p className="text-lg font-bold text-gray-900">
+                    <p className="text-lg font-bold text-white">
                       {coin.indicators.macd.valueMACD.toFixed(2)}
                     </p>
                   </div>
@@ -230,43 +309,42 @@ const CryptoAnalysisClient = () => {
         </div>
 
         {/* AI Analysis */}
-        <div className="bg-white rounded-lg shadow-sm border p-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center space-x-2">
+        <div className="bg-[#171c24] rounded-lg shadow-sm border border-gray-700/50 p-6">
+          <h3 className="text-lg font-semibold text-white mb-4 flex items-center space-x-2">
             <div className="w-6 h-6 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
               <span className="text-white text-xs font-bold">AI</span>
             </div>
-            <span>Phân tích AI</span>
+            <span>AI Analysis</span>
           </h3>
-          <div className="prose prose-sm max-w-none text-gray-700 leading-relaxed">
-            <ReactMarkdown>{analysisData?.aiAnalysis.analysis || ''}</ReactMarkdown>
+          <div className="text-gray-300 leading-relaxed">
+            <AIAnalysisRenderer analysis={analysisData?.aiAnalysis.analysis || ''} />
           </div>
-
         </div>
 
         {/* Alerts Section */}
         {analysisData && analysisData?.alerts?.length > 0 && (
-          <div className="mt-8 bg-white rounded-lg shadow-sm border p-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center space-x-2">
-              <AlertTriangle className="h-5 w-5 text-yellow-500" />
+          <div className="mt-8 bg-[#171c24] rounded-lg shadow-sm border border-gray-700/50 p-6">
+            <h3 className="text-lg font-semibold text-white mb-4 flex items-center space-x-2">
+              <AlertTriangle className="h-5 w-5 text-yellow-400" />
               <span>Cảnh báo</span>
             </h3>
             <div className="space-y-3">
               {analysisData.alerts.map((alert, index) => (
-                <div key={index} className="flex items-center space-x-3 p-3 bg-yellow-50 rounded-lg">
+                <div key={index} className="flex items-center space-x-3 p-3 bg-yellow-500/10 rounded-lg">
                   <div className="flex-shrink-0">
-                    <AlertTriangle className="h-5 w-5 text-yellow-500" />
+                    <AlertTriangle className="h-5 w-5 text-yellow-400" />
                   </div>
                   <div className="flex-1">
-                    <p className="text-sm font-medium text-gray-900">{alert.message}</p>
-                    <p className="text-xs text-gray-500">
+                    <p className="text-sm font-medium text-white">{alert.message}</p>
+                    <p className="text-xs text-gray-400">
                       {new Date(alert.timestamp).toLocaleString('vi-VN')}
                     </p>
                   </div>
                   <div className="flex-shrink-0">
                     <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                      alert.severity === 'HIGH' ? 'bg-red-100 text-red-800' :
-                      alert.severity === 'MEDIUM' ? 'bg-yellow-100 text-yellow-800' :
-                      'bg-green-100 text-green-800'
+                      alert.severity === 'HIGH' ? 'bg-red-500/20 text-red-400' :
+                      alert.severity === 'MEDIUM' ? 'bg-yellow-500/20 text-yellow-400' :
+                      'bg-green-500/20 text-green-400'
                     }`}>
                       {alert.severity}
                     </span>

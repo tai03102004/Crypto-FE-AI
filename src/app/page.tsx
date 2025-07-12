@@ -1,64 +1,64 @@
 "use client"
 
 import React, { useState, useEffect } from 'react';
-import { ChevronDown, TrendingUp, Shield, Zap, Brain, Bell, BarChart3, Eye, ArrowRight, Star, Users, Award, CheckCircle } from 'lucide-react';
+import { ChevronDown, TrendingUp, Shield, Zap, Brain, Bell, BarChart3, Eye, ArrowRight, Star, Users, CheckCircle, Sparkles } from 'lucide-react';
 
 const CryptoCopilotHome = () => {
   const [activeFeature, setActiveFeature] = useState(0);
   const [currentStat, setCurrentStat] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
 
+  
   const features = [
     {
       icon: <Brain className="w-8 h-8" />,
-      title: "Phân Tích AI Thông Minh",
-      description: "Sử dụng OpenAI GPT để phân tích xu hướng thị trường crypto và đưa ra khuyến nghị giao dịch chính xác",
+      title: "AI-Powered Analysis",
+      description: "Leverage IO Intelligence workflow with meta-llama IO integration to automatically analyze market trends and provide trading recommendations",
       color: "from-purple-500 to-pink-500"
     },
     {
       icon: <BarChart3 className="w-8 h-8" />,
-      title: "Chỉ Báo Kỹ Thuật",
-      description: "Theo dõi RSI, MACD và các chỉ báo chuyên nghiệp để nắm bắt thời điểm giao dịch tối ưu",
+      title: "Technical Indicators",
+      description: "Auto-calculate RSI, MACD, EMA using TAAPI.io API. RSI signals: >70 overbought, <30 oversold for optimal entry/exit points",
       color: "from-blue-500 to-cyan-500"
     },
     {
       icon: <Bell className="w-8 h-8" />,
-      title: "Cảnh Báo Thời Gian Thực",
-      description: "Nhận thông báo tức thì khi giá biến động mạnh hoặc xuất hiện cơ hội đầu tư",
+      title: "Anomaly Detection",
+      description: "Smart alerts for unusual price movements (5-10% drops in 1 hour) using automated workflow conditions",
       color: "from-orange-500 to-red-500"
     },
     {
       icon: <Eye className="w-8 h-8" />,
-      title: "Theo Dõi Đa Coin",
-      description: "Giám sát Bitcoin, Ethereum, BNB và nhiều coin khác cùng lúc với dữ liệu cập nhật liên tục",
+      title: "CoinGecko Integration",
+      description: "Real-time data collection from CoinGecko API with 1-5 minute intervals for multiple cryptocurrencies",
       color: "from-green-500 to-emerald-500"
     }
   ];
 
   const stats = [
-    { value: "10M+", label: "Giao dịch được phân tích" },
-    { value: "95%", label: "Độ chính xác dự đoán" },
-    { value: "24/7", label: "Theo dõi không ngừng" },
-    { value: "5s", label: "Cập nhật real-time" }
+    { value: "1-5min", label: "Data refresh rate" },
+    { value: "100+", label: "Technical indicators" },
+    { value: "24/7", label: "Automated monitoring" },
+    { value: "7-10", label: "Days to deploy" }
   ];
 
   const testimonials = [
     {
-      name: "Nguyễn Minh Tuấn",
-      role: "Trader chuyên nghiệp",
-      content: "Crypto Co-Pilot đã giúp tôi tăng lợi nhuận 300% trong 6 tháng qua. Phân tích AI cực kỳ chính xác!",
-      rating: 5
+      name: "Nguyễn Minh Tuấn", 
+      role: "Quantitative Analyst",
+      content: "The IO workflow automation saves me 4 hours daily. RSI and MACD calculations are perfectly integrated with CoinGecko data!"
     },
     {
       name: "Trần Thu Hà",
-      role: "Nhà đầu tư cá nhân",
-      content: "Giao diện thân thiện, cảnh báo kịp thời. Tôi không còn lo lắng về việc bỏ lỡ cơ hội nữa.",
+      role: "Individual investor",
+      content: "Friendly interface, timely alerts. I no longer worry about missing opportunities.",
       rating: 5
     },
     {
       name: "Lê Văn Minh",
-      role: "Quỹ đầu tư",
-      content: "Chỉ báo kỹ thuật rất chi tiết và dễ hiểu. Đây là công cụ không thể thiếu cho trader.",
+      role: "Investment fund",
+      content: "Technical indicators are very detailed and easy to understand. This is an indispensable tool for traders.",
       rating: 5
     }
   ];
@@ -69,14 +69,14 @@ const CryptoCopilotHome = () => {
       setCurrentStat(prev => (prev + 1) % stats.length);
     }, 3000);
     return () => clearInterval(interval);
-  }, []);
+  }, [stats.length]);
 
   useEffect(() => {
     const featureInterval = setInterval(() => {
       setActiveFeature(prev => (prev + 1) % features.length);
     }, 4000);
     return () => clearInterval(featureInterval);
-  }, []);
+  }, [features.length]);
 
   const scrollToSection = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
@@ -97,21 +97,22 @@ const CryptoCopilotHome = () => {
           <div className={`transform transition-all duration-1000 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
             <div className="inline-flex items-center px-4 py-2 rounded-full bg-gradient-to-r from-purple-500/20 to-pink-500/20 border border-purple-500/30 mb-8">
               <Zap className="w-4 h-4 mr-2 text-yellow-400" />
-              <span className="text-sm font-medium">Công nghệ AI tiên tiến nhất</span>
+              <span className="text-sm font-medium">The most advanced AI technology</span>
             </div>
             
             <h1 className="text-6xl md:text-8xl font-bold mb-6 bg-gradient-to-r from-white via-purple-200 to-blue-200 bg-clip-text text-transparent">
               Crypto
               <span className="block bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-                Co-Pilot
+                JadenX.AI
               </span>
             </h1>
             
             <p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed">
-              Trợ lý thông minh powered by AI cho trader crypto. 
-              <span className="text-purple-400 font-semibold"> Phân tích chuyên sâu</span>, 
-              <span className="text-blue-400 font-semibold"> cảnh báo kịp thời</span>, 
-              <span className="text-green-400 font-semibold"> quyết định chính xác</span>.
+              AI-powered crypto analysis agent using IO Intelligence workflow
+
+              <span className="text-purple-400 font-semibold"> CoinGecko data </span>, 
+              <span className="text-blue-400 font-semibold"> TAAPI.io indicators </span>, 
+              <span className="text-green-400 font-semibold"> automated alerts </span>.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
@@ -119,7 +120,7 @@ const CryptoCopilotHome = () => {
                 onClick={() => scrollToSection('features')}
                 className="group px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full font-semibold text-lg hover:from-purple-700 hover:to-pink-700 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-purple-500/25"
               >
-                Khám Phá Ngay
+                Explore Now
                 <ArrowRight className="w-5 h-5 ml-2 inline group-hover:translate-x-1 transition-transform" />
               </button>
               
@@ -127,7 +128,7 @@ const CryptoCopilotHome = () => {
                 onClick={() => scrollToSection('demo')}
                 className="px-8 py-4 border-2 border-white/20 rounded-full font-semibold text-lg hover:bg-white/10 transition-all duration-300"
               >
-                Xem Demo
+                Watch Demo
               </button>
             </div>
 
@@ -159,10 +160,10 @@ const CryptoCopilotHome = () => {
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-              Tính Năng Đột Phá
+              Breakthrough Features
             </h2>
             <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-              Kết hợp sức mạnh của AI, phân tích kỹ thuật và big data để mang đến trải nghiệm trading hoàn hảo
+              Powered by IO Intelligence workflow automation, CoinGecko API, and advanced ML models including LSTM for time series prediction
             </p>
           </div>
 
@@ -213,28 +214,28 @@ const CryptoCopilotHome = () => {
                 <div className="space-y-3">
                   <div className="flex justify-between items-center">
                     <span className="text-gray-400">BTC/USDT</span>
-                    <span className="text-green-400 font-semibold">+3.45%</span>
+                    <span className="text-green-400 font-semibold">RSI: 65 (Normal)</span>
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-gray-400">ETH/USDT</span>
-                    <span className="text-red-400 font-semibold">-1.23%</span>
+                    <span className="text-red-400 font-semibold">RSI: 75 (Overbought)</span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-gray-400">BNB/USDT</span>
-                    <span className="text-green-400 font-semibold">+2.15%</span>
-                  </div>
+                    <span className="text-gray-400">Workflow Status</span>
+                    <span className="text-blue-400 font-semibold">Running (5min)</span>
                 </div>
               </div>
 
               {/* Floating Alert */}
               <div className="absolute -top-4 -right-4 bg-gradient-to-r from-orange-500 to-red-500 rounded-xl p-4 transform rotate-3 animate-pulse">
                 <Bell className="w-6 h-6 mb-2" />
-                <div className="text-sm font-semibold">Alert!</div>
-                <div className="text-xs">BTC breakout detected</div>
+                <div className="text-sm font-semibold">Anomaly Alert!</div>
+                <div className="text-xs">BTC dropped 7% in 1hr</div>  
               </div>
             </div>
           </div>
         </div>
+      </div>
       </section>
 
       {/* Benefits Section */}
@@ -242,7 +243,7 @@ const CryptoCopilotHome = () => {
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold mb-6">
-              Tại Sao Chọn Crypto Co-Pilot?
+              Why Choose JadenX.AI?
             </h2>
           </div>
 
@@ -250,23 +251,27 @@ const CryptoCopilotHome = () => {
             {[
               {
                 icon: <Shield className="w-12 h-12 text-green-400" />,
-                title: "An Toàn & Bảo Mật",
-                description: "Dữ liệu được mã hóa end-to-end, không lưu trữ thông tin nhạy cảm"
+                title: "IO Workflow Security",
+                description: "Built on IO Intelligence platform with enterprise-grade security and encrypted API connections"
               },
               {
                 icon: <Zap className="w-12 h-12 text-yellow-400" />,
-                title: "Tốc Độ Vượt Trội",
-                description: "Cập nhật dữ liệu mỗi 5 giây, phản hồi trong thời gian thực"
+                title: "LSTM Predictions",
+                description: "Advanced time series forecasting using LSTM neural networks for crypto price trends"
               },
               {
                 icon: <Users className="w-12 h-12 text-blue-400" />,
-                title: "Cộng Đồng Mạnh",
-                description: "Hơn 50,000 trader tin tưởng và sử dụng hàng ngày"
+                title: "Template Ready",
+                description: "Quick 7-10 day deployment using pre-built IO workflow templates"
               }
             ].map((benefit, index) => (
               <div key={index} className="text-center p-8 rounded-2xl bg-slate-800/50 border border-slate-700 hover:border-slate-600 transition-all duration-300">
-                <div className="mb-6">{benefit.icon}</div>
-                <h3 className="text-xl font-semibold mb-4">{benefit.title}</h3>
+                <div className="mb-6">
+                  <div  className="flex items-center">
+                    {benefit.icon}
+                    <h3 className="text-xl font-semibold ml-[10px]">{benefit.title}</h3>
+                  </div>
+                </div>
                 <p className="text-gray-300">{benefit.description}</p>
               </div>
             ))}
@@ -279,7 +284,7 @@ const CryptoCopilotHome = () => {
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold mb-6">
-              Người Dùng Nói Gì?
+              What Do Users Say?
             </h2>
           </div>
 
@@ -291,7 +296,7 @@ const CryptoCopilotHome = () => {
                     <Star key={i} className="w-5 h-5 text-yellow-400 fill-current" />
                   ))}
                 </div>
-                <p className="text-gray-300 mb-6 italic">"{testimonial.content}"</p>
+                <p className="text-gray-300 mb-6">{testimonial.content}</p>
                 <div>
                   <div className="font-semibold">{testimonial.name}</div>
                   <div className="text-sm text-gray-400">{testimonial.role}</div>
@@ -303,35 +308,95 @@ const CryptoCopilotHome = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 px-4 bg-gradient-to-r from-purple-600 to-pink-600">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6">
-            Bắt Đầu Hành Trình Crypto Của Bạn
-          </h2>
-          <p className="text-xl mb-8 text-purple-100">
-            Tham gia cùng hàng ngàn trader thông minh đang sử dụng Crypto Co-Pilot
-          </p>
-          
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="px-8 py-4 bg-white text-purple-600 rounded-full font-semibold text-lg hover:bg-gray-100 transform hover:scale-105 transition-all duration-300">
-              Dùng Thử Miễn Phí
+      <section className="py-20 px-4 bg-gradient-to-r from-purple-600 to-pink-oklch(0.47 0.12 349.25)
+">
+        <div className="max-w-6xl mx-auto text-center px-6 py-16">
+          {/* Header with enhanced styling */}
+          <div className="relative mb-12">
+            <div className="absolute inset-0 bg-gradient-to-r from-purple-600/20 to-pink-600/20 blur-3xl rounded-full transform -translate-y-4"></div>
+            <div className="relative">
+              <div className="flex items-center justify-center gap-3 mb-4">
+                <Sparkles className="w-8 h-8 text-purple-400 animate-pulse" />
+                <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-purple-300 via-pink-300 to-purple-300 bg-clip-text text-transparent">
+                  Deploy Your Crypto Agent
+                </h2>
+                <Sparkles className="w-8 h-8 text-pink-400 animate-pulse" />
+              </div>
+              <p className="text-xl text-purple-200/90 max-w-2xl mx-auto leading-relaxed">
+                Get started with <span className="font-semibold text-purple-300">IO Intelligence</span> workflow templates in 
+                <span className="inline-block mx-2 px-3 py-1 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full text-sm font-bold">
+                  7-10 days
+                </span>
+              </p>
+            </div>
+          </div>
+
+          {/* Enhanced buttons */}
+          <div className="flex flex-col sm:flex-row gap-6 justify-center mb-16">
+            <button className="group relative px-10 py-5 bg-gradient-to-r from-white to-purple-50 text-purple-700 rounded-2xl font-bold text-lg overflow-hidden transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-2xl">
+              <div className="absolute inset-0 bg-gradient-to-r from-purple-400 to-pink-400 opacity-0 group-hover:opacity-10 transition-opacity duration-300"></div>
+              <div className="relative flex items-center gap-3">
+                <Zap className="w-5 h-5 group-hover:text-purple-600 transition-colors" />
+                Get Workflow Template
+              </div>
             </button>
-            <button className="px-8 py-4 border-2 border-white/30 rounded-full font-semibold text-lg hover:bg-white/10 transition-all duration-300">
-              Liên Hệ Tư Vấn
+            
+            <button className="group relative px-10 py-5 border-2 border-white/40 rounded-2xl font-bold text-lg text-white overflow-hidden transform hover:scale-105 transition-all duration-300 hover:border-purple-400">
+              <div className="absolute inset-0 bg-gradient-to-r from-purple-600/20 to-pink-600/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <div className="relative flex items-center gap-3">
+                <Shield className="w-5 h-5 group-hover:text-purple-300 transition-colors" />
+                Contact for consultation
+              </div>
             </button>
           </div>
 
-          <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+          {/* Enhanced features grid */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
-              { icon: <CheckCircle className="w-6 h-6" />, text: "Không cam kết dài hạn" },
-              { icon: <CheckCircle className="w-6 h-6" />, text: "Hỗ trợ 24/7" },
-              { icon: <CheckCircle className="w-6 h-6" />, text: "Hoàn tiền 100%" }
+              { 
+                icon: <CheckCircle className="w-8 h-8" />, 
+                title: "Long term commitment",
+                description: "Reliable partnership for sustained growth"
+              },
+              { 
+                icon: <CheckCircle className="w-8 h-8" />, 
+                title: "24/7 Support",
+                description: "Round-the-clock assistance whenever you need"
+              },
+              { 
+                icon: <CheckCircle className="w-8 h-8" />, 
+                title: "Give alerts anytime, anywhere",
+                description: "Instant notifications across all your devices"
+              }
             ].map((item, index) => (
-              <div key={index} className="flex items-center justify-center space-x-3">
-                <div className="text-green-300">{item.icon}</div>
-                <span className="text-purple-100">{item.text}</span>
+              <div 
+                key={index} 
+                className="group relative p-8 rounded-3xl bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-sm border border-white/10 hover:border-purple-400/50 transition-all duration-500 hover:transform hover:scale-105"
+              >
+                <div className="absolute inset-0 bg-gradient-to-br from-purple-600/10 to-pink-600/10 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div className="relative">
+                  <div className="flex justify-center mb-6">
+                    <div className="p-4 rounded-2xl bg-gradient-to-br from-green-400 to-emerald-400 text-white shadow-lg group-hover:shadow-green-400/25 transition-shadow duration-300">
+                      {item.icon}
+                    </div>
+                  </div>
+                  <h3 className="text-xl font-bold text-purple-100 mb-3 group-hover:text-white transition-colors">
+                    {item.title}
+                  </h3>
+                  <p className="text-purple-200/80 leading-relaxed group-hover:text-purple-100 transition-colors">
+                    {item.description}
+                  </p>
+                </div>
               </div>
             ))}
+          </div>
+
+          {/* Additional visual elements */}
+            <div className="mt-12 flex justify-center">
+            <div className="flex items-center gap-2 px-6 py-3 bg-white/5 rounded-full border border-white/10">
+              <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+              <span className="text-sm text-purple-200">Ready to deploy</span>
+            </div>
           </div>
         </div>
       </section>
