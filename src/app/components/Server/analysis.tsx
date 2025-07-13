@@ -2,6 +2,7 @@
 import React, { useState, useEffect, JSX } from 'react';
 import { TrendingUp, TrendingDown, DollarSign, BarChart3, AlertTriangle, Activity } from 'lucide-react';
 import AIChatWidget from '../Widget/AIChatWidget';
+import LSTMForecastRenderer from '../Widget/LSTMForecastRenderer';
 
 interface AnalysisData {
   timestamp: string;
@@ -27,6 +28,12 @@ interface AnalysisData {
   aiAnalysis: {
     analysis: string;
     tradingSignals: [];
+    lstmForecast: {
+      [coin: string]: {
+        next_day: number;
+        multi_step: number[];
+      };
+    };
   };
   alerts: {
     message: string;
@@ -309,15 +316,29 @@ const CryptoAnalysisClient = () => {
         </div>
 
         {/* AI Analysis */}
-        <div className="bg-[#171c24] rounded-lg shadow-sm border border-gray-700/50 p-6">
-          <h3 className="text-lg font-semibold text-white mb-4 flex items-center space-x-2">
-            <div className="w-6 h-6 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
-              <span className="text-white text-xs font-bold">AI</span>
+        <div className="space-y-6">
+          <div className="bg-[#171c24] rounded-xl shadow-lg border border-gray-700/30 p-6 hover:border-purple-500/30 transition-all duration-300 hover:shadow-purple-500/10">
+            <h3 className="text-xl font-bold text-white mb-6 flex items-center space-x-3">
+              <div className="w-8 h-8 bg-gradient-to-br from-purple-500 via-pink-500 to-indigo-500 rounded-lg flex items-center justify-center shadow-lg">
+                <span className="text-white text-sm font-bold">AI</span>
+              </div>
+              <span>AI Analysis</span>
+            </h3>
+            <div className="text-gray-300 leading-relaxed">
+              <AIAnalysisRenderer analysis={analysisData?.aiAnalysis.analysis || ''} />
             </div>
-            <span>AI Analysis</span>
-          </h3>
-          <div className="text-gray-300 leading-relaxed">
-            <AIAnalysisRenderer analysis={analysisData?.aiAnalysis.analysis || ''} />
+          </div>
+
+          <div className="bg-[#171c24] rounded-xl shadow-lg border border-gray-700/30 p-6 hover:border-purple-500/30 transition-all duration-300 hover:shadow-purple-500/10">
+            <h3 className="text-xl font-bold text-white mb-6 flex items-center space-x-3">
+              <div className="w-8 h-8 bg-gradient-to-br from-orange-500 via-red-500 to-pink-500 rounded-lg flex items-center justify-center shadow-lg">
+                <span className="text-white text-sm font-bold">🔮</span>
+              </div>
+              <span>AI Predictions for the Coming Days</span>
+            </h3>
+            <div className="text-gray-300 leading-relaxed">
+              <LSTMForecastRenderer forecastData={analysisData?.aiAnalysis.lstmForecast} />
+            </div>
           </div>
         </div>
 

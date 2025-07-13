@@ -1,7 +1,7 @@
 // components/AIChatWidget.tsx
 "use client"
 import React, { useState, useEffect, useRef } from 'react';
-import { MessageCircle, Send, X, Minimize2, Maximize2, User, Bot, Loader2 } from 'lucide-react';
+import { MessageCircle, Send, X, Minimize2, Maximize2, Bot, Loader2 } from 'lucide-react';
 
 interface Message {
   _id: string;
