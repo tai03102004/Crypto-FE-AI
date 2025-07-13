@@ -142,7 +142,9 @@ class CryptoAPIService {
   }
 
   // Calculate Python indicators
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   async calculatePythonIndicators(data: PythonIndicatorRequest): Promise<any> {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return this.request<any>("/api/python/indicators", {
       method: "POST",
       body: JSON.stringify(data),
@@ -151,6 +153,7 @@ class CryptoAPIService {
 
   // WebSocket connection
   createWebSocketConnection(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     onMessage: (data: any) => void,
     onError?: (error: Event) => void
   ): WebSocket {
