@@ -34,7 +34,6 @@ const CryptoHistoryPage: React.FC = () => {
   const coinId = params.coinId as string;
   const [historyData, setHistoryData] = useState<CandlestickData[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
   const [timeRange, setTimeRange] = useState<string>('30d');
   const [chartType, setChartType] = useState<'candlestick' | 'line' | 'area'>('candlestick');
   const [selectedCandle, setSelectedCandle] = useState<CandlestickData | null>(null);
@@ -59,7 +58,7 @@ const CryptoHistoryPage: React.FC = () => {
   };
 
   const convertApiDataToCandlestick = (apiData: APIResponse): CandlestickData[] => {
-    const { prices, market_caps, total_volumes } = apiData;
+    const { prices, total_volumes } = apiData;
     
     return prices.map((priceData, index) => {
       const [timestamp, price] = priceData;
@@ -91,10 +90,9 @@ const CryptoHistoryPage: React.FC = () => {
   };
 
   // Fetch data from API
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const fetchHistoryData = async (coinId: string, days: string) => {
-    setLoading(true);
-    setError(null);
-    
+    setLoading(true);    
     try {
       const response = await fetch(`http://localhost:3000/api/crypto/history/${coinId}?days=${days}`);
       
@@ -113,7 +111,6 @@ const CryptoHistoryPage: React.FC = () => {
       
     } catch (err) {
       console.error('Error fetching data:', err);
-      setError(err instanceof Error ? err.message : 'Failed to fetch data');
       
       // Fallback to demo data
       const demoData = generateDemoData(timeRange === '7d' ? 7 : timeRange === '30d' ? 30 : timeRange === '90d' ? 90 : 365);
@@ -361,7 +358,7 @@ const CryptoHistoryPage: React.FC = () => {
   useEffect(() => {
     const days = getTimeRangeDays(timeRange);
     fetchHistoryData(coinId, days);
-  }, [coinId, timeRange]);
+  }, [coinId, fetchHistoryData, timeRange]);
 
   if (loading) {
     return (

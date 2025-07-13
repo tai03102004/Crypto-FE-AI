@@ -39,7 +39,7 @@ const AIChatWidget: React.FC = () => {
     if (isOpen && !currentConversation) {
       createOrGetConversation();
     }
-  }, [isOpen]);
+  }, [currentConversation, isOpen]);
 
   const createOrGetConversation = async () => {
     try {
