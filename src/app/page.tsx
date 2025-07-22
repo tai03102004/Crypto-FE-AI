@@ -12,53 +12,54 @@ const CryptoCopilotHome = () => {
   const features = [
     {
       icon: <Brain className="w-8 h-8" />,
-      title: "AI-Powered Analysis",
-      description: "Leverage IO Intelligence workflow with meta-llama IO integration to automatically analyze market trends and provide trading recommendations",
+      title: "Multi-Agent Architecture",
+      description: "MarketAgent for data collection, AIAnalysisAgent with Meta LLaMA 3.3-70B, RiskManager for verification, and TradingAgent for execution",
       color: "from-purple-500 to-pink-500"
     },
     {
       icon: <BarChart3 className="w-8 h-8" />,
-      title: "Technical Indicators",
-      description: "Auto-calculate RSI, MACD, EMA using TAAPI.io API. RSI signals: >70 overbought, <30 oversold for optimal entry/exit points",
+      title: "LSTM Price Predictions",
+      description: "Custom-trained LSTM model providing next-day price predictions and 7-day trend forecasts for BTC and ETH",
       color: "from-blue-500 to-cyan-500"
     },
     {
       icon: <Bell className="w-8 h-8" />,
-      title: "Anomaly Detection",
-      description: "Smart alerts for unusual price movements (5-10% drops in 1 hour) using automated workflow conditions",
+      title: "Technical Analysis",
+      description: "7 essential indicators: RSI, MACD, EMA, SMA, Bollinger Bands, Volume, Stochastic Oscillator with confidence scoring",
       color: "from-orange-500 to-red-500"
     },
     {
       icon: <Eye className="w-8 h-8" />,
-      title: "CoinGecko Integration",
-      description: "Real-time data collection from CoinGecko API with 1-5 minute intervals for multiple cryptocurrencies",
+      title: "Telegram Integration",
+      description: "Real-time analysis, predictions, alerts, and trade execution updates delivered directly via Telegram bot",
       color: "from-green-500 to-emerald-500"
     }
   ];
 
   const stats = [
-    { value: "1-5min", label: "Data refresh rate" },
-    { value: "100+", label: "Technical indicators" },
-    { value: "24/7", label: "Automated monitoring" },
-    { value: "7-10", label: "Days to deploy" }
+    { value: "100+", label: "Days historical data" },
+    { value: "7", label: "Technical indicators" },
+    { value: "24/7", label: "Multi-agent system" },
+    { value: "≥75%", label: "Trade confidence threshold" }
   ];
 
   const testimonials = [
     {
       name: "Nguyễn Minh Tuấn", 
       role: "Quantitative Analyst",
-      content: "The IO workflow automation saves me 4 hours daily. RSI and MACD calculations are perfectly integrated with CoinGecko data!"
+      content: "The multi-agent system with LSTM predictions is incredibly accurate. The 75% confidence threshold ensures reliable trades!",
+      rating: 5
     },
     {
       name: "Trần Thu Hà",
-      role: "Individual investor",
-      content: "Friendly interface, timely alerts. I no longer worry about missing opportunities.",
+      role: "Individual Trader",
+      content: "Telegram notifications keep me informed 24/7. The technical indicators with confidence scoring removed my emotional trading.",
       rating: 5
     },
     {
       name: "Lê Văn Minh",
-      role: "Investment fund",
-      content: "Technical indicators are very detailed and easy to understand. This is an indispensable tool for traders.",
+      role: "Crypto Investment Fund",
+      content: "Meta LLaMA 3.3-70B analysis combined with 100+ days of historical data provides exceptional market insights.",
       rating: 5
     }
   ];
@@ -97,22 +98,21 @@ const CryptoCopilotHome = () => {
           <div className={`transform transition-all duration-1000 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
             <div className="inline-flex items-center px-4 py-2 rounded-full bg-gradient-to-r from-purple-500/20 to-pink-500/20 border border-purple-500/30 mb-8">
               <Zap className="w-4 h-4 mr-2 text-yellow-400" />
-              <span className="text-sm font-medium">The most advanced AI technology</span>
+              <span className="text-sm font-medium">Advanced Multi-Agent Trading System</span>
             </div>
             
             <h1 className="text-6xl md:text-8xl font-bold mb-6 bg-gradient-to-r from-white via-purple-200 to-blue-200 bg-clip-text text-transparent">
               Crypto
               <span className="block bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-                JadenX.AI
+                AIAssistant
               </span>
             </h1>
             
             <p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed">
-              AI-powered crypto analysis agent using IO Intelligence workflow
-
-              <span className="text-purple-400 font-semibold"> CoinGecko data </span>, 
-              <span className="text-blue-400 font-semibold"> TAAPI.io indicators </span>, 
-              <span className="text-green-400 font-semibold"> automated alerts </span>.
+              Smart multi-agent cryptocurrency trading platform with
+              <span className="text-purple-400 font-semibold"> LSTM predictions </span>, 
+              <span className="text-blue-400 font-semibold"> 7 technical indicators </span>, 
+              <span className="text-green-400 font-semibold"> automated execution </span>.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
@@ -120,7 +120,7 @@ const CryptoCopilotHome = () => {
                 onClick={() => scrollToSection('features')}
                 className="group px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full font-semibold text-lg hover:from-purple-700 hover:to-pink-700 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-purple-500/25"
               >
-                Explore Now
+                Explore System
                 <ArrowRight className="w-5 h-5 ml-2 inline group-hover:translate-x-1 transition-transform" />
               </button>
               
@@ -128,7 +128,7 @@ const CryptoCopilotHome = () => {
                 onClick={() => scrollToSection('demo')}
                 className="px-8 py-4 border-2 border-white/20 rounded-full font-semibold text-lg hover:bg-white/10 transition-all duration-300"
               >
-                Watch Demo
+                View Demo
               </button>
             </div>
 
@@ -160,10 +160,10 @@ const CryptoCopilotHome = () => {
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-              Breakthrough Features
+              Multi-Agent Trading System
             </h2>
             <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-              Powered by IO Intelligence workflow automation, CoinGecko API, and advanced ML models including LSTM for time series prediction
+              Powered by Meta LLaMA 3.3-70B, LSTM neural networks, and 100+ days of historical data for intelligent trading decisions
             </p>
           </div>
 
@@ -197,7 +197,7 @@ const CryptoCopilotHome = () => {
             <div className="relative">
               <div className="bg-slate-800/50 rounded-2xl p-8 border border-slate-700">
                 <div className="flex items-center justify-between mb-6">
-                  <h3 className="text-lg font-semibold">Dashboard Preview</h3>
+                  <h3 className="text-lg font-semibold">Trading Dashboard</h3>
                   <div className="flex space-x-2">
                     <div className="w-3 h-3 bg-red-500 rounded-full"></div>
                     <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
@@ -214,28 +214,28 @@ const CryptoCopilotHome = () => {
                 <div className="space-y-3">
                   <div className="flex justify-between items-center">
                     <span className="text-gray-400">BTC/USDT</span>
-                    <span className="text-green-400 font-semibold">RSI: 65 (Normal)</span>
+                    <span className="text-green-400 font-semibold">Confidence: 82%</span>
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-gray-400">ETH/USDT</span>
-                    <span className="text-red-400 font-semibold">RSI: 75 (Overbought)</span>
+                    <span className="text-yellow-400 font-semibold">LSTM Prediction: +3.2%</span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-gray-400">Workflow Status</span>
-                    <span className="text-blue-400 font-semibold">Running (5min)</span>
+                    <span className="text-gray-400">Trading Agent</span>
+                    <span className="text-blue-400 font-semibold">Active (4 agents)</span>
+                  </div>
                 </div>
               </div>
 
               {/* Floating Alert */}
               <div className="absolute -top-4 -right-4 bg-gradient-to-r from-orange-500 to-red-500 rounded-xl p-4 transform rotate-3 animate-pulse">
                 <Bell className="w-6 h-6 mb-2" />
-                <div className="text-sm font-semibold">Anomaly Alert!</div>
-                <div className="text-xs">BTC dropped 7% in 1hr</div>  
+                <div className="text-sm font-semibold">Trade Signal!</div>
+                <div className="text-xs">Confidence ≥75%</div>  
               </div>
             </div>
           </div>
         </div>
-      </div>
       </section>
 
       {/* Benefits Section */}
@@ -243,7 +243,7 @@ const CryptoCopilotHome = () => {
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold mb-6">
-              Why Choose JadenX.AI?
+              Why Choose CryptoAI?
             </h2>
           </div>
 
@@ -251,18 +251,18 @@ const CryptoCopilotHome = () => {
             {[
               {
                 icon: <Shield className="w-12 h-12 text-green-400" />,
-                title: "IO Workflow Security",
-                description: "Built on IO Intelligence platform with enterprise-grade security and encrypted API connections"
+                title: "Paper & Live Trading",
+                description: "Flexible trading modes with advanced risk management and rate limiting for safe usage"
               },
               {
                 icon: <Zap className="w-12 h-12 text-yellow-400" />,
-                title: "LSTM Predictions",
-                description: "Advanced time series forecasting using LSTM neural networks for crypto price trends"
+                title: "Real-time Processing",
+                description: "Multi-agent system processes data independently and in combination for fast, stable automation"
               },
               {
                 icon: <Users className="w-12 h-12 text-blue-400" />,
-                title: "Template Ready",
-                description: "Quick 7-10 day deployment using pre-built IO workflow templates"
+                title: "24/7 Monitoring",
+                description: "Continuous agent activity tracking with Telegram notifications for complete transparency"
               }
             ].map((benefit, index) => (
               <div key={index} className="text-center p-8 rounded-2xl bg-slate-800/50 border border-slate-700 hover:border-slate-600 transition-all duration-300">
@@ -308,8 +308,7 @@ const CryptoCopilotHome = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 px-4 bg-gradient-to-r from-purple-600 to-pink-oklch(0.47 0.12 349.25)
-">
+      <section className="py-20 px-4 bg-gradient-to-r from-purple-600 to-pink-600">
         <div className="max-w-6xl mx-auto text-center px-6 py-16">
           {/* Header with enhanced styling */}
           <div className="relative mb-12">
@@ -318,14 +317,14 @@ const CryptoCopilotHome = () => {
               <div className="flex items-center justify-center gap-3 mb-4">
                 <Sparkles className="w-8 h-8 text-purple-400 animate-pulse" />
                 <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-purple-300 via-pink-300 to-purple-300 bg-clip-text text-transparent">
-                  Deploy Your Crypto Agent
+                  Experience CryptoAI
                 </h2>
                 <Sparkles className="w-8 h-8 text-pink-400 animate-pulse" />
               </div>
               <p className="text-xl text-purple-200/90 max-w-2xl mx-auto leading-relaxed">
-                Get started with <span className="font-semibold text-purple-300">IO Intelligence</span> workflow templates in 
+                Join our testing phase with <span className="font-semibold text-purple-300">Multi-Agent Trading System</span> powered by
                 <span className="inline-block mx-2 px-3 py-1 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full text-sm font-bold">
-                  7-10 days
+                  LSTM & LLaMA 3.3
                 </span>
               </p>
             </div>
@@ -337,7 +336,7 @@ const CryptoCopilotHome = () => {
               <div className="absolute inset-0 bg-gradient-to-r from-purple-400 to-pink-400 opacity-0 group-hover:opacity-10 transition-opacity duration-300"></div>
               <div className="relative flex items-center gap-3">
                 <Zap className="w-5 h-5 group-hover:text-purple-600 transition-colors" />
-                Get Workflow Template
+                Join Testing Phase
               </div>
             </button>
             
@@ -345,7 +344,7 @@ const CryptoCopilotHome = () => {
               <div className="absolute inset-0 bg-gradient-to-r from-purple-600/20 to-pink-600/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               <div className="relative flex items-center gap-3">
                 <Shield className="w-5 h-5 group-hover:text-purple-300 transition-colors" />
-                Contact for consultation
+                Request Demo Access
               </div>
             </button>
           </div>
@@ -355,18 +354,18 @@ const CryptoCopilotHome = () => {
             {[
               { 
                 icon: <CheckCircle className="w-8 h-8" />, 
-                title: "Long term commitment",
-                description: "Reliable partnership for sustained growth"
+                title: "Advanced Risk Management",
+                description: "Multi-layered verification with 75% confidence threshold and paper trading mode"
               },
               { 
                 icon: <CheckCircle className="w-8 h-8" />, 
-                title: "24/7 Support",
-                description: "Round-the-clock assistance whenever you need"
+                title: "Real-time Telegram Updates",
+                description: "Instant notifications for predictions, alerts, and trade executions"
               },
               { 
                 icon: <CheckCircle className="w-8 h-8" />, 
-                title: "Give alerts anytime, anywhere",
-                description: "Instant notifications across all your devices"
+                title: "Currently in Testing Phase",
+                description: "Join our beta program and help refine CryptoAI for future deployment"
               }
             ].map((item, index) => (
               <div 
@@ -392,10 +391,10 @@ const CryptoCopilotHome = () => {
           </div>
 
           {/* Additional visual elements */}
-            <div className="mt-12 flex justify-center">
+          <div className="mt-12 flex justify-center">
             <div className="flex items-center gap-2 px-6 py-3 bg-white/5 rounded-full border border-white/10">
               <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-              <span className="text-sm text-purple-200">Ready to deploy</span>
+              <span className="text-sm text-purple-200">Testing Phase Active</span>
             </div>
           </div>
         </div>

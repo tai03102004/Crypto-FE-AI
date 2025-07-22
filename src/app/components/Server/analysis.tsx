@@ -1,7 +1,6 @@
 "use client"
 import React, { useState, useEffect, JSX } from 'react';
 import { TrendingUp, TrendingDown, DollarSign, BarChart3, AlertTriangle, Activity } from 'lucide-react';
-import AIChatWidget from '../Widget/AIChatWidget';
 import LSTMForecastRenderer from '../Widget/LSTMForecastRenderer';
 
 interface AnalysisData {
@@ -376,7 +375,6 @@ const CryptoAnalysisClient = () => {
           </div>
         )}
       </div>
-      <AIChatWidget />
     </div>
   );
 };
